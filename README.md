@@ -1,2 +1,3 @@
 # micro-weather-basic
-澶╂皵鏈嶅姟
+天气服务
+> ENCODING: GB2312
