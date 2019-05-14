@@ -28,9 +28,9 @@ public class Yesterday implements Serializable {
 
     private String date;
     private String high;
-    private String fx;      //风向
+    private String fx;      //wind orentation
     private String low;
-    private String fl;      //风力
+    private String fl;      //wind strength
     private String type;
 
     public String getDate() {

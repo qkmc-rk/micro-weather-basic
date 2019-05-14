@@ -22,6 +22,7 @@ package xyz.ruankun.microweatherbasic.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
 
 
     /**
-     * 该方法根据uri去请求第三方服务器，请求后将获得的数据 反序列化到天气对象中
+     * e
      * @param uri
      * @return
      */
@@ -72,13 +73,13 @@ public class WeatherDataServiceImpl implements WeatherDataService {
 
         System.out.println(new Date() + "  INFO  ---  " + uri);
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri,String.class);
-        //通过返回的状态码判断请求是否成功
+        //via status code to judge false or true
         if(responseEntity.getStatusCodeValue() == 200){
-            //请求成功，获取数据
+            //request success,to get data
             strBody = responseEntity.getBody();
         }
         System.out.println(new Date() + "  INFO  ---  ");
-        //将String数据反序列化到weatherResponse对象当中
+        //anti serialize the String data to Object
         try {
             weatherResponse = mapper.readValue(strBody, WeatherResponse.class);
         } catch (IOException e) {

@@ -30,7 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 改配置类 配置了restTemplate 用于请求第三方的API接口
+ * use to request third api
  */
 @Configuration
 public class RestConfiguration {

@@ -28,11 +28,11 @@ public class Weather implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String city;
-    private String aqi;     //空气质量
-    private String wendu;       //温度
+    private String aqi;     //air quolity
+    private String wendu;       //temporature
     private String ganmao;
-    private Yesterday yesterday;        //昨日天气
-    private List<Forecast> forecast;        //未来天气装跨国
+    private Yesterday yesterday;        //yesterday weather
+    private List<Forecast> forecast;        //future weather
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

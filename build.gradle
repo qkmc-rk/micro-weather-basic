@@ -1,16 +1,16 @@
 plugins {
 	id 'org.springframework.boot' version '2.1.4.RELEASE'
 	id 'java'
-	id 'idea'
 }
 
 apply plugin: 'io.spring.dependency-management'
 
 group = 'xyz.ruankun'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 sourceCompatibility = '1.8'
 
 repositories {
+	maven {url 'http://maven.aliyun.com/nexus/content/groups/public'}
 	mavenCentral()
 }
 
@@ -18,7 +18,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	//the client for web request.eg: request the weather api provided by network
-	implementation 'org.apache.heepcomponents:httpclient:4.5.3'
+	implementation 'org.apache.httpcomponents:httpclient'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

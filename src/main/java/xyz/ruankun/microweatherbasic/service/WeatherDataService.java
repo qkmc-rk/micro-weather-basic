@@ -29,16 +29,16 @@ import xyz.ruankun.microweatherbasic.vo.WeatherResponse;
 public interface WeatherDataService {
 
     /**
-     * 根据城市ID查询天气数据
-     * @param cityId   城市ID
-     * @return  天气数据
+     *
+     * @param cityId   cityID
+     * @return weather
      */
     WeatherResponse getDataByCityId(String cityId);
 
     /**
-     * 根据城市ID查询天气数据
-     * @param cityName   城市名
-     * @return  天气数据
+     *
+     * @param cityName
+     * @return  weather
      */
     WeatherResponse getDataByCityName(String cityName);
 
