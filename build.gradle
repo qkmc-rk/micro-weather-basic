@@ -20,5 +20,8 @@ dependencies {
 	//the client for web request.eg: request the weather api provided by network
 	implementation 'org.apache.httpcomponents:httpclient'
 
+	//redis
+	compile 'org.springframework.boot:spring-boot-starter-data-redis'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
