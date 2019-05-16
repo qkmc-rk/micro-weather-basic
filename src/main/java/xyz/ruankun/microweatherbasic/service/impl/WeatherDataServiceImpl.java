@@ -48,11 +48,10 @@ public class WeatherDataServiceImpl implements WeatherDataService {
     private String WEATHER_API;
     @Autowired
     private RestTemplate restTemplate;
-    /**
-     * use to operate the data in/out redis
-     */
+    // use to operate the data in/out redis
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    //how long the data will out of date from cache(redis)
     @Value("${micro-weather-basic.redis.timeout}")
     private Long TIME_OUT;
 
@@ -66,6 +65,12 @@ public class WeatherDataServiceImpl implements WeatherDataService {
     public WeatherResponse getDataByCityName(String cityName) {
         String uri = WEATHER_API + "?city=" + cityName;
         return this.doGetWeatherData(uri);
+    }
+
+    @Override
+    public void syncDataByCityId(String cityId) {
+        String uri = WEATHER_API + "?citykey=" + cityId;
+        this.saveWeatherData(uri);
     }
 
     /**
@@ -84,12 +89,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
             //sorry but there is no cache
             logger.info("sorry there is no weather info cache in redis");
             logger.info("start requesting server at:" + uri);
-            ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri,String.class);
-            //via status code to judge false or true
-            if(responseEntity.getStatusCodeValue() == 200){
-                //request success,to get data
-                strBody = responseEntity.getBody();
-            }
+            strBody = getBody(restTemplate,uri);
             //since we have gotten the data.We cache it.
             ops.set(uri,strBody,TIME_OUT, TimeUnit.SECONDS);
         }else{
@@ -109,4 +109,32 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         return weatherResponse;
     }
 
+    /**
+     * get the data from the uri and then save these data to cache (redis)
+     * @param uri
+     */
+    private void saveWeatherData(String uri){
+        ValueOperations<String, String> valueOperations = this.stringRedisTemplate.opsForValue();
+        String key = uri;
+        String strBody = null;
+        if(valueOperations.get(uri) != null){
+            logger.info("data exits in cache(redis),key is:" + uri);
+        }else{
+            strBody = getBody(restTemplate,uri);
+            valueOperations.set(key, strBody, TIME_OUT, TimeUnit.SECONDS);
+        }
+    }
+
+    /**
+     * this method is to reduce repeat code used by two methods up.
+     * @param restTemplate
+     * @param uri
+     * @return
+     */
+    private String getBody(RestTemplate restTemplate,String uri){
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(uri, String.class);
+        if(responseEntity.getStatusCodeValue() == 200)
+            return responseEntity.getBody();
+        return null;
+    }
 }

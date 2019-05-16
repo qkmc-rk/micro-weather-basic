@@ -2,4 +2,7 @@
 weather service
 > ENCODING: GB2312
 
-### 使用redis可以提高访问效率，减少与三方API的交互，避免被咸鱼
+- use redis to speed up，reducing requesting to third api.
+
+- use quartz to schedule.
+- Java has JAXB(java architecture for xml binding) to resolve xml documents.

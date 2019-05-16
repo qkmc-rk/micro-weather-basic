@@ -42,4 +42,10 @@ public interface WeatherDataService {
      */
     WeatherResponse getDataByCityName(String cityName);
 
+    /**
+     * use city code to sync data from third api to cache (based on redis)
+     * @param cityId
+     */
+    void syncDataByCityId(String cityId);
+
 }

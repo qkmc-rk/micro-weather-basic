@@ -1,4 +1,4 @@
-package xyz.ruankun.microweatherbasic.config;
+package xyz.ruankun.microweatherbasic.vo.jaxb;
 //                            _ooOoo_
 //                           o8888888o
 //                           88" . "88
@@ -20,30 +20,45 @@ package xyz.ruankun.microweatherbasic.config;
 //        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //                      Buddha Bless, No Bug !
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.web.client.RestTemplate;
-
-import java.nio.charset.StandardCharsets;
+import javax.xml.bind.annotation.*;
+import java.util.List;
 
 /**
- * use to request third api
- *
- * this class is to get RestTemplate to send restful requests.
+ * city includes many county. I wish you know it!!
  */
-@Configuration
-public class RestConfiguration {
+@XmlRootElement(name = "city")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class City {
 
-    @Autowired
-    private RestTemplateBuilder builder;
+    @XmlElement(name = "county")
+    private List<County> countyList;
 
-    @Bean
-    public RestTemplate restTemplate(){
-        RestTemplate restTemplate = builder.build();
-        restTemplate.getMessageConverters().set(1,new StringHttpMessageConverter(StandardCharsets.UTF_8));
-        return restTemplate;
+    @XmlAttribute(name = "id")
+    private String id;
+    @XmlAttribute(name = "name")
+    private String name;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<County> getCountyList() {
+        return countyList;
+    }
+
+    public void setCountyList(List<County> countyList) {
+        this.countyList = countyList;
     }
 }
