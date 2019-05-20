@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <!--responsable-->
@@ -10,8 +9,46 @@
     <link rel="stylesheet" href="http://image.ruankun.xyz/css/bootstrap.css">
     <script src="http://image.ruankun.xyz/js/jquery314.js" type="text/javascript"></script>
     <script src="http://image.ruankun.xyz/js/bootstrap.js" type="text/javascript"></script>
+    <style type="text/css">
+        .card{
+            border:1px solid dodgerblue;
+        }
+    </style>
 </head>
 <body>
-
+    <div class="container">
+        <div class="row">
+            <h1 th:text="${title}">mrruan</h1>
+            <select id="selectCityId">
+                <option th:each="city: ${cityList}"
+                        th:value="${city.weatherCode}" th:text="${city.name}"
+                        th:selected="${city.weatherCode eq cityId}">
+                    小老弟
+                </option>
+            </select>
+        </div>
+        <div class="row">
+            <p>空气质量指数:<span th:text="${report.aqi}"></span></p>
+        </div>
+        <div class="row">
+            <p>当前温度:<span th:text="${report.wendu}"></span></p>
+        </div>
+        <div class="row">
+            <p>温馨提示:<span th:text="${report.ganmao}"></span></p>
+        </div>
+        <!--卡片布局-->
+        <div class="row">
+            <div class="card col-lg-2" th:each="forecast : ${report.forecast}">
+                <div class="card-body">
+                    <p class="card-text" th:text="${forecast.date}"></p>
+                    <p class="card-text" th:text="${forecast.type}"></p>
+                    <p class="card-text" th:text="${forecast.high}"></p>
+                    <p class="card-text" th:text="${forecast.low}"></p>
+                    <p class="card-text" th:text="${forecast.fengxiang}"></p>
+                    <p class="card-text" th:text="${forecast.fengli}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

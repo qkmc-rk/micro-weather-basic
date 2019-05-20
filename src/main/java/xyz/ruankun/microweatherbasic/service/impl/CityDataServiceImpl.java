@@ -25,9 +25,14 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import xyz.ruankun.microweatherbasic.service.CityDataService;
 import xyz.ruankun.microweatherbasic.util.XmlBuilder;
+import xyz.ruankun.microweatherbasic.vo.jaxb.City;
 import xyz.ruankun.microweatherbasic.vo.jaxb.Country;
+import xyz.ruankun.microweatherbasic.vo.jaxb.County;
+import xyz.ruankun.microweatherbasic.vo.jaxb.Province;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CityDataServiceImpl implements CityDataService {
@@ -60,5 +65,21 @@ public class CityDataServiceImpl implements CityDataService {
 
         Country country = (Country) XmlBuilder.xmlStrToObject(Country.class,stringBuffer.toString());
         return country;
+    }
+
+    @Override
+    public List<County> getCountyList() throws Exception {
+        Country country = getCountry();
+        if(null == country) return null;
+        //local attribute doesn't has the thread safety problems.
+        List<County> countyList = new ArrayList<>();
+        for (Province p :
+                country.getProvinceList()) {
+            for (City c :
+                    p.getCityList()) {
+                countyList.addAll(c.getCountyList());
+            }
+        }
+        return countyList;
     }
 }

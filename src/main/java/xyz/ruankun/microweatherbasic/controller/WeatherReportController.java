@@ -55,7 +55,7 @@ public class WeatherReportController {
         model.addAttribute("title", "mrruan's weather report");
         model.addAttribute("cityId", cityId);
         try {
-            model.addAttribute("cityList", cityDataService.getCountry());
+            model.addAttribute("cityList", cityDataService.getCountyList());
         } catch (Exception e) {
             logger.error("sorry!!!!!!!get cityData error!!!!!");
             logger.error("at WeatherReportController-->cityDataService.getCountry()");
