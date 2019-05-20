@@ -10,36 +10,40 @@
     <script src="http://image.ruankun.xyz/js/jquery314.js" type="text/javascript"></script>
     <script src="http://image.ruankun.xyz/js/bootstrap.js" type="text/javascript"></script>
     <style type="text/css">
-        .card{
-            border:1px solid dodgerblue;
+        .dropdown-menu{
+            max-height: 600px;
+            overflow: scroll;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <h1 th:text="${title}">mrruan</h1>
-            <select id="selectCityId">
-                <option th:each="city: ${cityList}"
-                        th:value="${city.weatherCode}" th:text="${city.name}"
-                        th:selected="${city.weatherCode eq cityId}">
-                    小老弟
-                </option>
-            </select>
+            <h1 th:text="${title}" style="display: inline-block;">mrruan</h1>
+            <div class="btn-group" >
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span th:text="${report.getCity()}"></span><span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li th:each="city: ${cityList}">
+                        <a th:href="'/report/cityId/' + ${city.weatherCode}" th:text="${city.name}"></a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="row">
-            <p>空气质量指数:<span th:text="${report.aqi}"></span></p>
+            <h3>空气质量指数:<span th:text="${report.aqi}">无</span></h3>
         </div>
         <div class="row">
-            <p>当前温度:<span th:text="${report.wendu}"></span></p>
+            <h3>当前温度:<span th:text="${report.wendu}"></span>℃</h3>
         </div>
         <div class="row">
-            <p>温馨提示:<span th:text="${report.ganmao}"></span></p>
+            <h3>温馨提示:<span th:text="${report.ganmao}"></span></h3>
         </div>
         <!--卡片布局-->
         <div class="row">
-            <div class="card col-lg-2" th:each="forecast : ${report.forecast}">
-                <div class="card-body">
+            <div class="col-xs-4 col-md-2 col-lg-2" th:each="forecast : ${report.forecast}">
+                <div class="thumbnail">
                     <p class="card-text" th:text="${forecast.date}"></p>
                     <p class="card-text" th:text="${forecast.type}"></p>
                     <p class="card-text" th:text="${forecast.high}"></p>
@@ -50,5 +54,12 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $('#selectCityId').change(function () {
+            var cityId = $('#selectCityId').val();
+            var url = '/report/cityId/' + cityId;
+            window.location.href = url;
+        });
+    </script>
 </body>
 </html>
