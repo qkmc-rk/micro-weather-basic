@@ -26,5 +26,8 @@ dependencies {
 	//quartz
 	compile 'org.springframework.boot:spring-boot-starter-quartz'
 
+	//thymeleaf
+	compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 	compile 'org.springframework.boot:spring-boot-starter-test'
 }
